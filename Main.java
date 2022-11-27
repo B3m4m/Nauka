@@ -1,36 +1,63 @@
-import java.util.Scanner;
++package klasyanonimowe;
+
 
 public class Main {
-    public static void main(String[] args) throws Exception {
-        calculateBMI();
 
+    public static void main(String[] args) 
+    {
+        ZachowaniePoWcisnieciu z = () -> {
+            System.out.println("jestem z klasy anonimowej");
+        };
+        
+        ZachowaniePoWcisnieciu2 z2 = (a, b) -> a + b;
+       
+                
+        Przycisk p = new Przycisk();
+        
+        p.dodajAkcje(() -> {
+            System.out.println("jestem z klasy anonimowej");
+        });
+        
+        int wynik = p.dodajAkcje2(5, 10, z2);
+        
+        System.out.println(wynik);
+     
     }
-    private static void calculateBMI() throws Exception{
-
-        System.out.println("Please enter your weight in kg");
-        Scanner s = new Scanner(System.in);
-        float weight = s. nextFloat();
-        System.out.println("Please enter your height in cm");
-        float height = s.nextFloat();
-
-        float bmi = (100*100*weight)/(height*height);
-        System.out.println("Your BMI is:" + bmi);
-        printBMICategory(bmi);
-
-    }
-    private static void printBMICategory(float bmi){
-        if(bmi<18.5){
-            System.out.println("Your are underweight");
-        }
-        else if (bmi < 25){
-            System.out.println("Your are  normal");
-        }
-        else if (bmi < 30){
-            System.out.println("Your are overweight");
-        }
-        else {
-            System.out.println("You are obese");
-        }
-    }
-
+    
 }
+interface ZachowaniePoWcisnieciu
+{
+    void akcja();
+}
+
+interface ZachowaniePoWcisnieciu2
+{
+    int akcja2(int a, int b);
+}
+ 
+class Przycisk
+{
+
+    void dodajAkcje(ZachowaniePoWcisnieciu z)
+    {
+        z.akcja();
+    }
+    
+    int dodajAkcje2(int a, int b, ZachowaniePoWcisnieciu2 z)
+    {
+        return z.akcja2(a, b);
+    }
+            
+
+    
+}
+
+/*
+    LAMBDA WYRAŻENIE:
+    () -> {}
+
+    () - tu podajemy argumentu do przesłania do funkcji
+    -> - strzałka szybka informacja że mamy do czynienia z wyrażeniem lambda
+    {} - Treść wyrażenia
+
+*/
